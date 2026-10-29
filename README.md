@@ -11,6 +11,7 @@ Repository website: https://github.com/odzre/web-listener
 - Callback melalui WorkManager dengan retry otomatis saat jaringan bermasalah.
 - Foreground service agar listener tetap berjalan saat aplikasi ditutup.
 - Auto-start setelah reboot bila listener diaktifkan.
+- Console log notifikasi lokal dari aplikasi yang dicentang, lengkap dengan status callback, salin, dan hapus log.
 - Status akses notifikasi, status callback terakhir, dan tombol tes koneksi.
 - Permintaan pengecualian optimasi baterai untuk vendor Android yang agresif.
 - APK debug siap pasang di `release/notipay-listener-debug.apk`.
@@ -34,6 +35,8 @@ Hasil build:
 ```text
 app/build/outputs/apk/debug/app-debug.apk
 ```
+
+Perubahan versi **1.1.0**: console log notifikasi, status callback per log, salin/hapus log, dan perbaikan scroll daftar aplikasi.
 
 APK yang sudah tersedia di repository:
 
@@ -85,6 +88,8 @@ app/src/main/java/com/notipay/listener/
 ├── BootReceiver.kt
 ├── AppListAdapter.kt
 ├── Prefs.kt
+├── LogStore.kt
+├── LogAdapter.kt
 └── InstalledApp.kt
 ```
 

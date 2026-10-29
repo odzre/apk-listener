@@ -4,6 +4,7 @@ import android.app.Notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.LruCache
+import java.util.UUID
 
 class NotificationListener : NotificationListenerService() {
 
@@ -56,8 +57,35 @@ class NotificationListener : NotificationListenerService() {
         if (previous != null && now - previous < 15_000) return
         recentNotifications.put(dedupeKey, now)
 
-        if (Prefs.callbackUrl(this).isBlank() || Prefs.apiKey(this).isBlank()) return
-        CallbackSender.enqueueNotification(this, packageName, title, text)
+        val appLabel = runCatching {
+            val info = packageManager.getApplicationInfo(packageName, 0)
+            packageManager.getApplicationLabel(info).toString()
+        }.getOrDefault(packageName)
+        val logId = UUID.randomUUID().toString()
+        LogStore.add(
+            this,
+            NotificationLogEntry(
+                id = logId,
+                timestamp = now,
+                packageName = packageName,
+                appLabel = appLabel,
+                title = title,
+                text = text.take(1800),
+                status = "Menerima notifikasi",
+            ),
+        )
+
+        if (Prefs.callbackUrl(this).isBlank() || Prefs.apiKey(this).isBlank()) {
+            LogStore.updateStatus(this, logId, "Belum dikonfigurasi")
+            return
+        }
+
+        val queued = CallbackSender.enqueueNotification(this, packageName, title, text, logId)
+        LogStore.updateStatus(
+            this,
+            logId,
+            if (queued) "Antre callback" else "Gagal antre callback",
+        )
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {

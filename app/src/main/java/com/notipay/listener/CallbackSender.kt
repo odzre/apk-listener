@@ -19,6 +19,7 @@ object CallbackSender {
         packageName: String,
         title: String,
         text: String,
+        logId: String? = null,
     ): Boolean {
         val url = Prefs.callbackUrl(context)
         val apiKey = Prefs.apiKey(context)
@@ -32,10 +33,16 @@ object CallbackSender {
             put("timestamp", Instant.now().toString())
         }.toString()
         val uniqueKey = "notification-${sha256("$packageName|$title|$text").take(24)}"
-        return enqueue(context, url, payload, uniqueKey)
+        return enqueue(context, url, payload, uniqueKey, logId)
     }
 
-    fun enqueueTest(context: Context, url: String, apiKey: String, deviceId: String): Boolean {
+    fun enqueueTest(
+        context: Context,
+        url: String,
+        apiKey: String,
+        deviceId: String,
+        logId: String? = null,
+    ): Boolean {
         if (url.isBlank() || apiKey.isBlank()) return false
         val payload = JSONObject().apply {
             put("apikey", apiKey)
@@ -45,10 +52,16 @@ object CallbackSender {
             put("device_id", deviceId)
             put("timestamp", Instant.now().toString())
         }.toString()
-        return enqueue(context, url, payload, "test-${System.currentTimeMillis()}")
+        return enqueue(context, url, payload, "test-${System.currentTimeMillis()}", logId)
     }
 
-    private fun enqueue(context: Context, url: String, payload: String, uniqueKey: String): Boolean {
+    private fun enqueue(
+        context: Context,
+        url: String,
+        payload: String,
+        uniqueKey: String,
+        logId: String?,
+    ): Boolean {
         val request = OneTimeWorkRequestBuilder<CallbackWorker>()
             .setConstraints(
                 Constraints.Builder()
@@ -59,6 +72,7 @@ object CallbackSender {
                 workDataOf(
                     CallbackWorker.KEY_URL to url,
                     CallbackWorker.KEY_PAYLOAD to payload,
+                    CallbackWorker.KEY_LOG_ID to (logId ?: ""),
                 ),
             )
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
