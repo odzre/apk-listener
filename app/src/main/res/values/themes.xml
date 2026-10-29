@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.NotiPay" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/np_primary</item>
+        <item name="colorOnPrimary">@color/np_on_primary</item>
+        <item name="colorSecondary">@color/np_primary</item>
+        <item name="colorOnSecondary">@color/np_on_primary</item>
+        <item name="android:colorBackground">@color/np_background</item>
+        <item name="colorSurface">@color/np_surface</item>
+        <item name="colorSurfaceVariant">@color/np_surface_high</item>
+        <item name="colorOnSurface">@color/np_text</item>
+        <item name="colorOnSurfaceVariant">@color/np_muted</item>
+        <item name="android:statusBarColor">@color/np_background</item>
+        <item name="android:navigationBarColor">@color/np_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="materialCardViewStyle">@style/Widget.NotiPay.Card</item>
+        <item name="textInputStyle">@style/Widget.NotiPay.TextInputLayout</item>
+    </style>
+
+    <style name="Widget.NotiPay.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/np_surface</item>
+        <item name="cardCornerRadius">18dp</item>
+        <item name="strokeColor">@color/np_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="Widget.NotiPay.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/np_primary</item>
+        <item name="boxBackgroundColor">@color/np_background</item>
+        <item name="hintTextColor">@color/np_muted</item>
+    </style>
+
+    <style name="TextAppearance.NotiPay.Section" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/np_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.NotiPay.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/np_muted</item>
+    </style>
+</resources>

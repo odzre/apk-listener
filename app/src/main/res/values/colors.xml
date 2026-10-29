@@ -1,0 +1,13 @@
+<resources>
+    <color name="np_background">#05070F</color>
+    <color name="np_surface">#0B1220</color>
+    <color name="np_surface_high">#111A2C</color>
+    <color name="np_primary">#22D3EE</color>
+    <color name="np_on_primary">#041018</color>
+    <color name="np_text">#E8EEFB</color>
+    <color name="np_muted">#8FA0B8</color>
+    <color name="np_success">#34D399</color>
+    <color name="np_warning">#F59E0B</color>
+    <color name="np_danger">#F87171</color>
+    <color name="np_border">#1E293B</color>
+</resources>

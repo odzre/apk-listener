@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NotiPay Listener</string>
+    <string name="notification_channel_name">Listener aktif</string>
+    <string name="notification_channel_description">Menjaga pembaca notifikasi tetap berjalan.</string>
+    <string name="notification_title">NotiPay Listener aktif</string>
+    <string name="notification_text">Membaca notifikasi aplikasi yang dipilih.</string>
+</resources>
